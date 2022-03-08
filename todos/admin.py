@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Board, Label, Column, Task
+
+admin.site.register(Board)
+admin.site.register(Label)
+admin.site.register(Column)
+admin.site.register(Task)
