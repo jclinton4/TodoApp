@@ -1,31 +1,14 @@
 {% extends 'base.html' %} 
 
 {% block title %}Boards{% endblock title %} 
+
 {% block content %}
-<h1>Todo Boards</h1>
 {% for board in object_list %}
     <div class="card">
         <div class="card-header">
-            {{ board.name }}
+            <a href="{% url 'board_detail' board.pk %}">{{ board.name }}</a>
         </div>
-       <div class="card-body">
-            {% for column in board.columns.all %}
-                <p>
-                    <span class="font-weight-bold">
-                        {{ column }}
-                    </span>
-                    {% for task in column.tasks.all %}
-                    <div class="list-group">
-                        <label class="list-group-item d-flex gap-3">
-                            {{ task }}
-                            
-                        </label>
-                    </div>
-                    {% endfor %}
-                    <a href="{% url 'task_add' column.pk %}">Add Task</a>
-                </p>
-            {% endfor %}
-       </div>
     </div>
 {% endfor %}
+<a href="{% url 'board_add' %}">Add Board</a>
 {% endblock content %}

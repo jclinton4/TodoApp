@@ -22,6 +22,9 @@ class Board(models.Model):
         super().save(force_insert, force_update, using, update_fields)
         if is_new:
             self.members.add(self.owner)
+    
+    def get_absolute_url(self):
+        return reverse('board_detail', args=[str(self.id)])
 
 
 class Column(models.Model):
@@ -34,6 +37,9 @@ class Column(models.Model):
 
     def __str__(self):
         return f"{self.title}"
+
+    def get_absolute_url(self):
+        return reverse('board_detail', args=[str(self.id)])
 
 
 class Label(models.Model):
