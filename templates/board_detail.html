@@ -4,24 +4,40 @@
 
 {% block content %}
 <div class="card">
-  <div class="card-header">{{ object.name }}</div>
-  <div class="card-body">
-    <div class="d-flex gap-5 justify-content-center">
-      {% for column in object.columns.all %}
-      <div class="list-group mx-0">
-        <label class="list-group-item d-flex gap-2">
-          <span class="font-weight-bold"> {{ column }} </span>
-        </label>
-        {% for task in column.tasks.all %}
-        <div class="list-group">
-          <label class="list-group-item d-flex gap-3"> {{ task }} </label>
-        </div>
-        {% endfor %}
-        <a href="{% url 'task_add' column.pk %}">Add Task</a>
-      </div>
-      {% endfor %}
+    <div class="card-header justify-content-between">
+        {{ object.name }}
+        <a class="card-link justify-content-end" href="{% url 'column_add' board.pk %}">Add Column</a>
     </div>
-    <a href="{% url 'column_add' board.pk %}">Add Column</a>
+  <div class="card-body">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    {% for column in object.columns.all %}
+        <div class="col">
+            <div class="card">
+            <div class="card-header"> 
+                <div class="dropdown">
+                    {{ column }} 
+                    <button class="btn dropdown-toggle btn-sm justify-content-end" type="button" id="dropdownMenuButton"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="{% url 'task_add' column.pk %}">Add Task</a>
+                        <a class="dropdown-item" href="{% url 'column_delete' column.pk %}">Delete Column</a>
+                    </div>
+                </div>
+            </div>
+                {% for task in column.tasks.all %}
+                    <div class="card-body">
+                        <!--<p class="card-text"> {{ task }} </p> -->
+                        <a class="card-text" href="{% url 'task_detail' task.pk %}">{{ task }}</a>
+                        <small class="d-block text-muted">{{ task.description }}</small>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+    
+    
   </div>
 </div>
 {% endblock content %}

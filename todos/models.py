@@ -39,7 +39,7 @@ class Column(models.Model):
         return f"{self.title}"
 
     def get_absolute_url(self):
-        return reverse('board_detail', args=[str(self.id)])
+        return reverse('board_detail', args=[str(self.board.id)])
 
 
 class Label(models.Model):
@@ -72,7 +72,7 @@ class Task(models.Model):
     task_order = models.PositiveIntegerField(default=0, editable=False, db_index=True)
 
     def __str__(self):
-        return f"{self.id} - {self.title}"
+        return f"{self.title}"
 
     class Meta:
         ordering = ["task_order"]
@@ -86,3 +86,5 @@ class Comment(models.Model):
     author = models.ForeignKey(get_user_model(), on_delete=models.PROTECT, related_name="comments")
     text = models.TextField()
 
+    def __str__(self):
+        return f'{self.text[:50]}{"..." if len(self.text) > 50 else ""}'

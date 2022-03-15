@@ -1,0 +1,26 @@
+{% extends 'base.html' %} 
+
+{% block title %}Task{% endblock title %} 
+
+{% block content %}
+<div class="card">
+  <div class="card-header">{{ object.title }}</div>
+  <div class="card-body">
+    <div class="card-text">{{ object.description }}</div>
+  </div>
+  <div class="card-footer">
+    {% for comment in task.comments.all %}
+        <div class="card-text">{{ comment.text }}</div>
+        <small>{{ comment.author }}</small>
+    {% empty %}
+        <p>No Comments</p>
+    {% endfor %}
+    <div>
+        <form method="POST">{%csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="save btn btn-successful">Comment</button>
+        </form>
+    </div>
+  </div>
+</div>
+{% endblock content %}
